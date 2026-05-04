@@ -50,6 +50,7 @@
 
 [General]
     iplot = 2   # 1 / jpg plot on screen; 2 / png plot into kml and jpg on screen
+    KeepPNG = 'Yes'
     PlotWidth  = 5.0 #10.9
     PlotHeight = 5.0 # 7.5
     OzFlux_area_image = "None #../Sites/<site_name>/images/<site_name>_ndvi_<fp_size>.png" # 

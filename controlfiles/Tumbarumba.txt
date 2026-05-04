@@ -48,6 +48,7 @@
 
 [General]
     iplot = 2   # 1 / jpg plot on screen; 2 / png plot into kml
+    KeepPNG = 'Yes'  # keep PNG plots after KMZ creation (set 'No' to delete)
     #idaytime = 0
     PlotWidth  = 5 #10.9
     PlotHeight = 5 # 7.5

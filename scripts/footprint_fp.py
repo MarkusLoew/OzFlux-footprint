@@ -120,6 +120,8 @@ def footprint_main(cf, mode):
     # if plotting to screen      is requested then iplot = 1
     # if plotting to googleEarth is requested then iplot = 2
     iplot = int(cf['General']['iplot'])
+    keep_png_opt = footprint_utils.get_keyvaluefromcf(cf, ["General"], "KeepPNG", default="Yes")
+    keep_png = str(keep_png_opt).strip().lower() in ["yes", "y", "true", "1"]
     # IF export images in kml format?
     if iplot == 2:  # write kml - format header
         kmlname = d["site_name"] + '_' + mode + '_fp' + '.kml'
@@ -243,7 +245,7 @@ def footprint_main(cf, mode):
         #footprint_utils.update_progress(progress) 
     if iplot == 2:
         # Finish kml file and process a compressed kmz file including all images
-        kml_finalise(d,fi,mode,kmlname)
+        kml_finalise(d,fi,mode,kmlname,keep_png=keep_png)
     if i_aoi:
         paoi.close()                  
 
@@ -508,7 +510,7 @@ def kml_write(lon, lat, zt1, zt2, data, station, mode, clevs, fi, plot_path,i_cu
     fi.write('  </LatLonBox>\n')
     fi.write('</GroundOverlay>\n')
 
-def kml_finalise(d,fi,mode,kmlname):
+def kml_finalise(d,fi,mode,kmlname,keep_png=True):
     # write the footer of the kml file and close the file
     fi.write("</Folder>\n")
     fi.write('</kml>\n')
@@ -524,11 +526,13 @@ def kml_finalise(d,fi,mode,kmlname):
     compression = zipfile.ZIP_DEFLATED
     zf = zipfile.ZipFile(kmzname, mode='w')
     zf.write(kmlname, compress_type=compression)
-    os.remove(kmlname)
     for f in plotlist:
         zf.write(f, compress_type=compression)
-        os.remove(f)
     zf.close()
+    if not keep_png:
+        os.remove(kmlname)
+        for f in plotlist:
+            os.remove(f)
     os.chdir(cwd)
 
 def plotphifield(x, y, zt1, zt2, data, station, mode, clevs, imagename,i_cum):

@@ -22,6 +22,7 @@
 
 [General]
     iplot = 1
+    KeepPNG = 'Yes'
     #idaytime = 0
     PlotWidth = 8.0
     PlotHeight = 8.0
