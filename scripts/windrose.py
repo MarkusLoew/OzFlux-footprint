@@ -13,9 +13,16 @@ from matplotlib.patches import Rectangle, Polygon
 from matplotlib.ticker import ScalarFormatter, AutoLocator
 from matplotlib.text import Text, FontProperties
 from matplotlib.projections.polar import PolarAxes
-from numpy.lib.twodim_base import histogram2d
 import matplotlib.pyplot as plt
-from pylab import poly_between
+
+
+def poly_between(x, y1, y2):
+    x = np.asarray(x)
+    y1_arr = np.broadcast_to(np.asarray(y1), x.shape)
+    y2_arr = np.broadcast_to(np.asarray(y2), x.shape)
+    xs = np.concatenate([x, x[::-1]])
+    ys = np.concatenate([y1_arr, y2_arr[::-1]])
+    return xs, ys
 
 RESOLUTION = 100
 ZBASE = -1000 #The starting zorder for all drawing, negative to have the grid on
@@ -436,11 +443,11 @@ def histogram(dir, var, bins, nsector, normed=False, blowto=False):
     """
 
     if len(var) != len(dir):
-        raise ValueError, "var and dir must have same length"
+        raise ValueError("var and dir must have same length")
 
     angle = 360./nsector
 
-    dir_bins = np.arange(-angle/2 ,360.+angle, angle, dtype=np.float)
+    dir_bins = np.arange(-angle/2 ,360.+angle, angle, dtype=float)
     dir_edges = dir_bins.tolist()
     dir_edges.pop(-1)
     dir_edges[0] = dir_edges.pop(-1)
@@ -453,8 +460,8 @@ def histogram(dir, var, bins, nsector, normed=False, blowto=False):
         dir = dir + 180.
         dir[dir>=360.] = dir[dir>=360.] - 360
 
-    table = histogram2d(x=var, y=dir, bins=[var_bins, dir_bins],
-                          normed=False)[0]
+    table = np.histogram2d(x=var, y=dir, bins=[var_bins, dir_bins],
+                          density=False)[0]
     # add the last value to the first to have the table of North winds
     table[:,0] = table[:,0] + table[:,-1]
     # and remove the last col

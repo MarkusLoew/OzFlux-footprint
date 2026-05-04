@@ -18,7 +18,8 @@ import platform
 import pytz
 import sys
 import time
-import Tkinter,tkSimpleDialog
+import tkinter as tk
+from tkinter import simpledialog
 import xlrd
 import xlwt
 
@@ -341,7 +342,7 @@ def create_index_list(cf, d, date):
         list_EnDate = []
         if 'StartDate' in cf['Options'].keys():
             xlStDate = cf['Options']['StartDate']
-            print xlStDate
+            print(xlStDate)
             list_StDate.append(GetDateIndex(date,xlStDate,ts=d["flux_period"],default=0,match='exact'))
         else:
             list_StDate.append(0)         # start from begin of file
@@ -363,9 +364,9 @@ def create_index_list(cf, d, date):
             lastIdx = GetDateIndex(date,xlEnDate,ts=d["flux_period"],default=0,match='exact')
         else:
             lastIdx = len(date)-2 # run to end of file
-        list_StDate = range(firstIdx,lastIdx)
-        list_EnDate = range(firstIdx+1,lastIdx+1)
-        print 'Start to End = ',list_StDate, list_EnDate
+        list_StDate = list(range(firstIdx,lastIdx))
+        list_EnDate = list(range(firstIdx+1,lastIdx+1))
+        print('Start to End = ',list_StDate, list_EnDate)
 
     elif climfreq == 'Daily':
         StDate = date[0]
@@ -537,7 +538,7 @@ def CreateVariable(ds,variable):
     # do the attributes
     ds.series["_tmp_"]["Attr"] = copy.deepcopy(variable["Attr"])
     # and copy the temporary series back to the original label
-    ds.series[unicode(label)] = copy.deepcopy(ds.series['_tmp_'])
+    ds.series[str(label)] = copy.deepcopy(ds.series['_tmp_'])
     # delete the temporary series
     del ds.series['_tmp_']
 
@@ -752,7 +753,7 @@ def get_datetimefromnctime(ds,time,time_units):
     except  AttributeError:
         dt = cftime.num2date(time, time_units)
     #dt = netCDF4.num2date(time,time_units)
-    ds.series[unicode("DateTime")] = {}
+    ds.series[str("DateTime")] = {}
     ds.series["DateTime"]["Data"] = dt
     ds.series["DateTime"]["Flag"] = numpy.zeros(nRecs)
     ds.series["DateTime"]["Attr"] = {}
@@ -887,7 +888,7 @@ def get_start_index(ldt, start, mode="quiet"):
     Author: PRI
     Date: October 2016
     """
-    if isinstance(start, basestring):
+    if isinstance(start, str):
         try:
             start = dateutil.parser.parse(start)
             if start >= ldt[0] and start <= ldt[-1]:
@@ -926,7 +927,7 @@ def get_end_index(ldt, end, mode="quiet"):
     Author: PRI
     Date: October 2016
     """
-    if isinstance(end, basestring):
+    if isinstance(end, str):
         try:
             end = dateutil.parser.parse(end)
             if end <= ldt[-1] and end >= ldt[0]:
@@ -1025,8 +1026,18 @@ def FindIndicesOfBInA(a,b):
         logger.warning(msg)
     if isinstance(a, numpy.ndarray) and isinstance(b, numpy.ndarray):
         asorted = numpy.argsort(a)
-        bpos = numpy.searchsorted(a[asorted], b)
-        indices = asorted[bpos]
+        a_sorted = a[asorted]
+        bpos = numpy.searchsorted(a_sorted, b)
+        valid = bpos < len(a_sorted)
+        if numpy.any(valid):
+            bpos_valid = bpos[valid]
+            exact = a_sorted[bpos_valid] == b[valid]
+            if numpy.any(exact):
+                indices = asorted[bpos_valid[exact]]
+            else:
+                indices = numpy.array([], dtype=numpy.int64)
+        else:
+            indices = numpy.array([], dtype=numpy.int64)
     elif isinstance(a, list) and isinstance(b, list):
         tmpset = set(a)
         indices = [i for i,item in enumerate(b) if item in tmpset]
@@ -1079,6 +1090,6 @@ def CreateSeries(ds,Label,Data,Flag,Attr):
     else:
         for item in Attr:
             ds.series['_tmp_']['Attr'][item] = Attr[item]
-    ds.series[unicode(Label)] = ds.series['_tmp_']     # copy temporary series to new series
+    ds.series[str(Label)] = ds.series['_tmp_']     # copy temporary series to new series
     del ds.series['_tmp_']                        # delete the temporary series
 

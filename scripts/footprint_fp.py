@@ -626,7 +626,7 @@ def PolygonContribution(cf,x,y,fm,start,finish,paoi):
         fm_masked = numpy.ma.compressed(numpy.ma.masked_where(mask == False, fm))
         # sum the area
         sum_fm_masked = fm_masked.sum()
-        print "%s, %s, % 8.2f" % (start.strftime("%Y%m%d%H%M"),ID, 100.0*(sum_fm_masked/sum_fm))
+        print("%s, %s, % 8.2f" % (start.strftime("%Y%m%d%H%M"),ID, 100.0*(sum_fm_masked/sum_fm)))
         #,num_true, num_fals, num_all, sum_fm, sum_fm_masked
         #msg = "Field number = " + ID + ' ' + str(100.0*(sum_fm_masked/sum_fm)) + '%'
         #logger.info(msg)

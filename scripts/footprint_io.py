@@ -16,7 +16,8 @@ import pdb
 import platform
 import sys
 import time
-import Tkinter, tkFileDialog
+import tkinter as tk
+from tkinter import filedialog
 import xlrd
 import xlwt
 import xlsxwriter
@@ -60,8 +61,8 @@ def get_outfilenamefromcf(cf):
 
 def get_controlfilename(path='.',title='Choose a control file'):
     logger.info(' Choosing the control file ')
-    root = Tkinter.Tk(); root.withdraw()
-    name = tkFileDialog.askopenfilename(parent=root,initialdir=path,title=title)
+    root = tk.Tk(); root.withdraw()
+    name = filedialog.askopenfilename(parent=root,initialdir=path,title=title)
     root.destroy()
     return name
 
@@ -161,7 +162,7 @@ def nc_read_series(ncFullName,checktimestep=True,fixtimestepmethod=""):
         dimlist = [x.lower() for x in ncFile.variables[ThisOne].dimensions]
         if "time" not in dimlist: continue
         # create the series in the data structure
-        ds.series[unicode(ThisOne)] = {}
+        ds.series[str(ThisOne)] = {}
         # get the data and the QC flag
         data,flag,attr = nc_read_var(ncFile,ThisOne)
         ds.series[ThisOne]["Data"] = data

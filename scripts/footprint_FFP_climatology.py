@@ -465,7 +465,7 @@ def check_ffp_inputs(ustar, sigmav, h, ol, wind_dir, zm, z0, umean, rslayer, ver
         raise_ffp_exception(5, verbosity, counter, msgstring)
         return False
     if z0 is not None and umean is None and zm <= 12.5*z0:
-        if rslayer is 1:
+        if rslayer == 1:
             raise_ffp_exception(6, verbosity, counter, msgstring)
         else:
             raise_ffp_exception(20, verbosity, counter, msgstring)
@@ -519,20 +519,27 @@ def get_contour_levels(f, dx, dy, rs=None):
 
 #===============================================================================
 def get_contour_vertices(x, y, f, lev):
-    import matplotlib._cntr as cntr
-    c = cntr.Cntr(x, y, f)
-    nlist = c.trace(lev, lev, 0)
-    segs = nlist[:len(nlist)//2]
-    N = len(segs[0][:, 0])
-    xr = [segs[0][ix, 0] for ix in range(N)]
-    yr = [segs[0][ix, 1] for ix in range(N)]
+    import numpy as np
+    import matplotlib.pyplot as plt
 
-    #Set contour to None if it's found to reach the physical domain
-    if x.min() >= min(segs[0][:, 0]) or max(segs[0][:, 0]) >= x.max() or \
-       y.min() >= min(segs[0][:, 1]) or max(segs[0][:, 1]) >= y.max():
-        return [None, None]
+    fig, ax = plt.subplots()
+    try:
+        cs = ax.contour(x, y, f, levels=[lev])
+        segments = cs.allsegs[0] if hasattr(cs, "allsegs") and len(cs.allsegs) > 0 else []
+        if len(segments) == 0:
+            return [None, None]
+        vertices = max(segments, key=lambda segment: segment.shape[0])
+        xr = vertices[:, 0].tolist()
+        yr = vertices[:, 1].tolist()
 
-    return [xr, yr]   # x,y coords of contour points.
+        #Set contour to None if it's found to reach the physical domain
+        if x.min() >= np.min(vertices[:, 0]) or np.max(vertices[:, 0]) >= x.max() or \
+           y.min() >= np.min(vertices[:, 1]) or np.max(vertices[:, 1]) >= y.max():
+            return [None, None]
+
+        return [xr, yr]   # x,y coords of contour points.
+    finally:
+        plt.close(fig)
 
 #===============================================================================
 def plot_footprint(x_2d, y_2d, fs, clevs=None, show_footprint=True, normalize=None,

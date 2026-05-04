@@ -2,7 +2,8 @@ README.md
 
 Footprint calculation for OzFlux netCDF data files, generally L3.
 
-**Python 2.7 is required!**
+**Vibe-converted from Python 2.7 to Python 3**
+ Untested conversion! -- use at your own risk and compare with the Python 2.7 version.
 
 Calculation of Kormann and Meixner, 2001 and Kljun et al., 2015 footprint climatologies.
 Additionally a windrose climatology can be plotted for the same time periods.
@@ -30,7 +31,7 @@ For a super explanation how to install python, git, and all necessary tools plea
 https://github.com/OzFlux/PyFluxPro by Peter Isaac
 
 How to use it: 
-Just run python footprint_GUI.py in your FootPrint directory. 
+Install dependencies from requirements-py3.txt, then run `python3 footprint_GUI.py` in your FootPrint directory.
 Setup your own controlfile. For FootPrints you need the height of your measurements and an average height 
 of the canopy. You also need to specify how large the area of the footprint may be and give 
 the number of cells for your grid. The larger the size and the larger the cell number is the 

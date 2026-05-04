@@ -30,15 +30,14 @@ matplotlib.use('TkAgg')
 import numpy
 import ntpath
 import time
-# changed from tkinter to Tkinter for python 2.7 compatibility
-import Tkinter as tk
-import tkMessageBox
+import tkinter as tk
+from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
 import sys
 # The Lindsay Trap: check the scripts directory is present
 if not os.path.exists("./scripts/"):
-    print "PyFluxPro: the scripts directory is missing"
+    print("PyFluxPro: the scripts directory is missing")
     sys.exit()
 # since the scripts directory is there, try importing the modules
 sys.path.append('./scripts')
@@ -190,7 +189,7 @@ class qcgui(tk.Tk):
         # ===
 
     def do_helpcontents(self):
-        tkMessageBox.showinfo("Obi Wan says ...","Read the source, Luke!")
+        messagebox.showinfo("Obi Wan says ...","Read the source, Luke!")
 
     def do_progress(self,text):
         """

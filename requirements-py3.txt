@@ -1,0 +1,19 @@
+# Python 3 compatible environment for OzFlux-footprint
+# System dependency (not pip): python3-tk (eg: apt install python3-tk)
+# Install with:
+# python3 -m pip install -r requirements-py3.txt
+
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+pandas>=1.5
+xlrd==1.2.0
+xlwt>=1.3.0
+xlsxwriter>=3.1.0
+netCDF4>=1.6
+cftime>=1.6
+configobj>=5.0.8
+Pillow>=10.0
+names>=0.3.0
+python-dateutil>=2.8.2
+pytz>=2023.3

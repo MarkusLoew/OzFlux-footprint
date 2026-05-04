@@ -25,7 +25,7 @@ from windrose import WindroseAxes
 logger = logging.getLogger("footprint_log")
 
 if not os.path.exists("./scripts/"):
-    print "PyFluxPro: the scripts directory is missing"
+    print("PyFluxPro: the scripts directory is missing")
     sys.exit()
 sys.path.append('scripts')
 
