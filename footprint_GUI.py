@@ -30,6 +30,7 @@ matplotlib.use('TkAgg')
 import numpy
 import ntpath
 import time
+# changed from tkinter to Tkinter for python 2.7 compatibility
 import Tkinter as tk
 import tkMessageBox
 from PIL import Image, ImageTk

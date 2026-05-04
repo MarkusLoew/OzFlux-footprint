@@ -20,7 +20,7 @@
 [Imports]
     [[Habl]]
         source = "ERAI"
-        file_name = /run/user/1389489483/gvfs/sftp:host=live.fluxdata.cloud.edu.au,user=ubuntu/home/ubuntu/mnt/TERNsftp/TERNEP-Q5937/Sites/WombatStateForest/Data/External/ERA5/WombatStateForest_ERA5.nc
+        file_name = /home/unimelb.edu.au/lom/Downloads/Era5/WombatForest_ERA5.nc
         var_name = "Habl"
 
 [Tower]

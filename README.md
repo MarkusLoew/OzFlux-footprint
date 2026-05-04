@@ -2,6 +2,8 @@ README.md
 
 Footprint calculation for OzFlux netCDF data files, generally L3.
 
+**Python 2.7 is required!**
+
 Calculation of Kormann and Meixner, 2001 and Kljun et al., 2015 footprint climatologies.
 Additionally a windrose climatology can be plotted for the same time periods.
 

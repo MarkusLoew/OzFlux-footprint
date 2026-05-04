@@ -1,8 +1,7 @@
 # Python 2.7 compatible environment for OzFlux-footprint
+# System dependency (not pip): python-tk ie: apt install python-tk
 # Use with:
-#   python2.7 -m pip install --upgrade "pip==20.3.4" "setuptools==44.1.1" "wheel<0.38"
-#   python2.7 -m pip install -r requirements-py27.txt
-# System dependency (not pip): python-tk
+# python2.7 -m pip install --upgrade "pip==20.3.4" "setuptools==44.1.1" "wheel<0.38" && python2.7 -m pip install -r requirements-py27.txt
 
 setuptools==44.1.1
 numpy==1.16.6
