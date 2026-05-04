@@ -10,7 +10,7 @@
 # GUI to run Kljun etal 2015 or Korman and Meixner 2001 footprint
 # or create windrose climatologies using OzFlux netcdf file format.
 # INPUT: KM01  ==> e.g. footprint.txt
-#        Kljun ==> e.g. footprint.txt
+#        Kljun ==> e.g. footprint.txtls -
 #
 # CHANGES:
 #

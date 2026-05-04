@@ -197,7 +197,7 @@ def footprint_main(cf, mode):
             i_cum = footprint_utils.get_keyvaluefromcf(cf,["Options"],'Cumulative')
             if i_cum:
                 # ===
-                msg = "Caclulated cumulative footprint field"
+                msg = "Calculated cumulative footprint field"
                 logger.info(msg)
                 f_min = 0.05
                 f_step = 0.05
